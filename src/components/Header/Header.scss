@@ -1,0 +1,50 @@
+@import '../../SCSS-utils/variables';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem 1rem 1rem;
+
+  &__button {
+    color: #fff;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      color: #f00;
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+
+  &__input {
+    margin: 5px;
+    padding-left: 15px;
+    width: 200px;
+    height: 3rem;
+    border-radius: 2rem;
+    background-color: $background-secondary;
+    border-color: transparent;
+    caret-color: #fff;
+    color: #fff;
+    outline: none;
+    font-size: 20px;
+
+    &:focus {
+      outline: auto;
+      outline-color: #666;
+    }
+
+    &::placeholder {
+      position: relative;
+      left: 2rem;
+      color: #fff;
+      opacity: .5;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+@import './SCSS-utils/variables';
+
+.App {
+  display: flex;
+  justify-content: center;
+  background-color: $background-main;
+  color: #fff;
+
+  &__container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 1280px;
+    min-height: 100vh;
+  }
+
+  &__main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;;
+  }
+}

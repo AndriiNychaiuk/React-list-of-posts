@@ -1,0 +1,46 @@
+.post {
+  position: relative;
+  margin-bottom: 10px;
+
+  &:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    margin-bottom: 20px;
+    height: 1px;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    opacity: 0.3;
+  }
+
+  &__button {
+    margin-bottom: 20px;
+    width: 100%;
+    color: #fff;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    text-align: start;
+  }
+  
+  &__title {
+    cursor: pointer;
+    transition: 0.3s;
+  
+    &:hover {
+      color: #b72727;
+    }
+  
+    &:active {
+      opacity: 0.6;
+    }
+  }
+  
+  &__body {
+    margin: 0;
+    padding: 0 6px 2rem;
+    font-size: 20px;
+    cursor:text;
+  }
+}

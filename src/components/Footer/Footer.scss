@@ -1,0 +1,51 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 1rem 2rem;
+
+  &__button {
+    color: #fff;
+    background-color: transparent;
+    font-size: 20px;
+    text-transform: capitalize;
+    border: transparent;
+    cursor: pointer;
+    transition: 0.1s;
+
+    &:active {
+      transform: scale(0.9);
+    }
+
+    &:disabled {
+      cursor: auto;
+      color: #666;
+      transform: scale(1)
+    }
+  }
+
+  &__arrow {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    border: 2px solid #fff;
+    transform: rotate(45deg);
+
+    &--left {
+      left: -20px;
+      border-top: none;
+      border-right: none;
+    }
+
+    &--right {
+      top: 0;
+      right: -20px;
+      border-bottom: none;
+      border-left: none;
+    }
+  }
+}
