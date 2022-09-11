@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { User } from '../../types/User';
@@ -19,12 +20,14 @@ export const UserDetails = React.memo<Props>(({
   };
   
   return (
-    <li className="card" >
+    <li className={classNames('card' , {
+      'card--active': userId === user.id
+    })} >
       <div>{user.name}</div>
       <div>{user.email}</div>
       <div>{user.phone}</div>
 
-      <Link to={userId !== user.id ? `user/${user.id}/posts/` : '/'}>
+      <Link to={userId !== user.id ? `user/${user.id}/posts` : '/'}>
         <button 
           type="button" 
           className="card__button"

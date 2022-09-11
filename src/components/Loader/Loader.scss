@@ -1,0 +1,30 @@
+@import '../../SCSS-utils/variables';
+
+.Loader {
+  position: relative;
+  top: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  transform: translateY(-50%);
+
+  &__content {
+    margin: 1em auto;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    border: 0.3em solid $background-main;
+    border-left-color: $background-button;
+    animation: load8 1.2s infinite linear;
+  }
+}
+
+@keyframes load8 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

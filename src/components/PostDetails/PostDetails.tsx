@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import { Post } from '../../types/Post';
 import './PostDetails.scss';
@@ -11,13 +12,13 @@ interface Props {
 export const PostDetails = React.memo<Props>(({ 
   post, postId, onHandlePostIdSelect 
 }) => {
-  const setTitle = (title: string): string => {
-    return title[0].toUpperCase() + title.slice(1);
+  const normilizeText = (text: string): string => {
+    return text[0].toUpperCase() + text.slice(1);
   }
 
   const previewTitle = post.title.length > 30 
-    ? setTitle(post.title).slice(0, 30) + '...'
-    : setTitle(post.title);
+    ? normilizeText(post.title).slice(0, 30) + '...'
+    : normilizeText(post.title);
 
   return (
     <li key={post.id} className="post">
@@ -26,12 +27,16 @@ export const PostDetails = React.memo<Props>(({
         className="post__button"
         onClick={() => onHandlePostIdSelect(post.id)}
       >
-        {<h3 className="post__title">{postId !== post.id 
-          ? previewTitle
-          : setTitle(post.title)}</h3>}
+        <h3 className={classNames('post__title', {
+          'post__title--active': postId === post.id,
+        })}>
+          {postId !== post.id 
+            ? previewTitle
+            : normilizeText(post.title)}
+        </h3>
       </button>
 
-      {postId === post.id && <p className="post__body">{post.body}</p>}
+      {postId === post.id && <p className="post__body">{normilizeText(post.body)}</p>}
     </li>
   );
 });

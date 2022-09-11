@@ -7,28 +7,26 @@ import './CardsList.scss';
 interface Props {
   users: User[],
   page: number,
+  cardsQuantity: 2 | 4,
   userId: number,
   onSetUserId: React.Dispatch<React.SetStateAction<number>>,
 }
 
 export const CardsList = React.memo<Props>(({ 
-  users, page, userId, onSetUserId 
+  users, page, cardsQuantity, userId, onSetUserId 
 }) => {
-  const setStyle = () => {
-    if (userId) {
-      return {transform: 'translateX(-30%) scale(0.8)', zIndex: '1'};
-    }
-  }
-
   return (
-    <div className="cards"
-      style={setStyle()}
+    <div className={classNames('cards', {
+      'cards--selected': userId,
+    })}
     >
       <ul 
-        className="cards__list"
+        className={classNames('cards__list', {
+          'cards__list--narrow': cardsQuantity === 2,
+        })}
       >
         {users.map((user, index) => {
-          if (Math.ceil((index + 1) / 4) !== page) {
+          if (Math.ceil((index + 1) / cardsQuantity) !== page) {
             return null;
           }
 

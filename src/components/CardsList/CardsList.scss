@@ -1,4 +1,4 @@
-@import '../../SCSS-utils/variables';
+@import '../../SCSS-utils/mixins';
 
 .cards {
   position: relative;
@@ -17,6 +17,25 @@
     padding: 0;
     width: 60%;
     list-style: none;
+
+    @include onTablet {
+      width: auto;
+      max-width: 900px;
+    }
+
+    @include onMobile {
+      width: 50%;
+      max-width: 900px;
+    }
+
+    &--narrow {
+      width: 50%;
+    }
   }
 
+  &--selected {
+    z-index: 1;
+    width: 100%;
+    transform: translateX(-30%) scale(0.8);
+  }
 }

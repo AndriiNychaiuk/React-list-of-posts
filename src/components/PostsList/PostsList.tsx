@@ -1,21 +1,20 @@
+import classNames from 'classnames';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Post } from '../../types/Post';
+import { Loader } from '../Loader/Loader';
 import { PostDetails } from '../PostDetails/PostDetails';
 import './PostsList.scss'
 
 interface Props {
   userPosts: Post[],
   userId: number,
+  onResetUserId: React.Dispatch<React.SetStateAction<number>>,
 }
 
-export const PostsList = React.memo<Props>(({ userPosts, userId }) => {
-  const setStyle = useCallback((): React.CSSProperties => {
-    return userId
-      ? { opacity: '1', transform: 'translateX(-5%)' }
-      : { opacity: '0', transform: 'translateX(5%)' }
-  }, [userId]);
-  
+export const PostsList = React.memo<Props>(({ 
+  userPosts, userId, onResetUserId,
+}) => {
   const navigation = useNavigate();
   const { search } = useLocation();
   const searchParams = new URLSearchParams(search);
@@ -32,10 +31,13 @@ export const PostsList = React.memo<Props>(({ userPosts, userId }) => {
   };
 
   return (
-    <div 
-      className="user-posts"
-    >
-      <ul className="user-posts__list" style={setStyle()}>
+    <div>
+      <ul className={
+        classNames('user-posts', {
+          'user-posts--selected': userId,
+        })}
+      >
+        {!userPosts.length && <Loader />}
         {userPosts.map(post => (
           <PostDetails 
             key={post.id} 
@@ -45,6 +47,18 @@ export const PostsList = React.memo<Props>(({ userPosts, userId }) => {
           />
         ))}
       </ul>
+
+      {!!userId && (
+        <Link to={'/'}>
+          <button 
+            type="button" 
+            className="user-posts__close"
+            onClick={() => onResetUserId(0)}
+          >
+            X
+          </button>
+      </Link>
+      )}
     </div>
   );
 });

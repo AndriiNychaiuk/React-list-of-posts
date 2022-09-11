@@ -13,23 +13,31 @@ import { Post } from './types/Post';
 import { User } from './types/User';
 
 const App: React.FC = () => {
+  // #region useState
+
   const [users, setUsers] = useState<User[]>([]);
-  const [page, setPage] = useState(1);
   const [userPosts, setUserPosts] = useState<Post[]>([]);
   const [userId, setUserId] = useState(0);
+  
   const [query, setQuery] = useState('');
   const [appliedQuery, setAppliedQuery] = useState('');
+  
+  const [page, setPage] = useState(1);
+  const [cardsQuantity, setCardsQuantity] = useState<2 | 4>(4);
+
   const [areUsersSorted, sortUsers] = useState(false);
+
+  // #endregion
+  
+  // #region useCallback
 
   const applyQuery = useCallback(
     debounce(setAppliedQuery, 1000),
     [],
   );
-
-  const { pathname } = useLocation();
   
   const setAllQueries = useCallback(({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    const allowedSymbols = target.value.replace(/[^A-z ]/, '');
+    const allowedSymbols = target.value.replace(/[^A-z А-іІ]/, '');
 
     setQuery(allowedSymbols);
     applyQuery(allowedSymbols);
@@ -46,6 +54,10 @@ const App: React.FC = () => {
   const filterCallback = useCallback((user: User) => {
     return user.name.toLowerCase().includes(appliedQuery.toLowerCase())
   }, [appliedQuery]);
+ 
+  // #endregion
+  
+  // #region useMemo
 
   const visibleUsers = useMemo(() => {
     return [...users]
@@ -58,28 +70,50 @@ const App: React.FC = () => {
   }, [page]);
 
   const lastPage = useMemo(() => {
-    return page === Math.ceil(visibleUsers.length / 4) || !visibleUsers.length;
+    return page === Math.ceil(visibleUsers.length / cardsQuantity) 
+      || !visibleUsers.length;
   }, [page, visibleUsers]);
   
+  // #endregion
+
+  const { innerWidth } = window;
+  const { pathname } = useLocation();
+
+  console.log(pathname);
+  
+
+  // #region useEffect
+
   useEffect(() => {
     getUsers()
       .then(setUsers);
     
     setUserId(+pathname.replace(/[^0-9.]/g, ''));
   }, []);
-
+  
   useEffect(() => {
     if (userId) {
+      setUserPosts([]);
+
       getUserPosts(userId)
         .then(setUserPosts)
+        .catch(err => console.log(err))
+    }
+
+    if (innerWidth <= 769 || (innerWidth <= 1280 && !!userId)) {
+      setCardsQuantity(2);
+    } else {
+      setCardsQuantity(4);
     }
   }, [userId]);
   
   useEffect(() => {
-    if (Math.ceil(visibleUsers.length / 4) < page) {
+    if (Math.ceil(visibleUsers.length / cardsQuantity) < page) {
       setPage(1);
     }
   }, [appliedQuery]);
+
+  // #endregion 
   
   return (
     <div className="App">
@@ -92,14 +126,28 @@ const App: React.FC = () => {
         />
 
         <main className="App__main">
-          <CardsList 
-            users={visibleUsers} 
-            page={page}
-            userId={userId}
-            onSetUserId={setUserId}
-          />
+          {!visibleUsers.length 
+            ? <h1 className="App__empty">
+                User with this name doesn't exist.
+              </h1>
+            : (
+              <>
+                <CardsList 
+                  users={visibleUsers} 
+                  page={page}
+                  cardsQuantity={cardsQuantity}
+                  userId={userId}
+                  onSetUserId={setUserId}
+                />
 
-          <PostsList userPosts={userPosts} userId={userId} />
+                <PostsList 
+                  userPosts={userPosts} 
+                  userId={userId}
+                  onResetUserId={setUserId}
+                />
+              </>
+            )
+          }
         </main>
 
         <Footer 

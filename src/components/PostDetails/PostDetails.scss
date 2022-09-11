@@ -1,6 +1,10 @@
+@import "../../SCSS-utils/variables";
+
 .post {
   position: relative;
   margin-bottom: 10px;
+
+
 
   &:not(:last-child)::after {
     content: "";
@@ -29,11 +33,15 @@
     transition: 0.3s;
   
     &:hover {
-      color: #b72727;
+      color: $active-text;
     }
   
     &:active {
       opacity: 0.6;
+    }
+
+    &--active {
+      color: $active-text;
     }
   }
   
