@@ -20,6 +20,7 @@
   margin: 0 1rem 2rem;
 
   @include onMobile {
+    bottom: 2rem;
     margin: 0 1rem 1rem;
   }
 

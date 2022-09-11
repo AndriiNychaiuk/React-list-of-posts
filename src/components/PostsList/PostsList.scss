@@ -1,7 +1,7 @@
 @import '../../SCSS-utils/variables';
 @import '../../SCSS-utils/mixins';
 
-.user-posts  {
+.user-posts {
   position: absolute;
   top: 0;
   right: 0;
@@ -27,8 +27,9 @@
   }
 
   @include onMobile {
+    position: fixed;
     transform: translateX(0);
-    bottom: 3rem;
+    bottom: 0;
     padding: 2rem;
     width: 100%;
   }
