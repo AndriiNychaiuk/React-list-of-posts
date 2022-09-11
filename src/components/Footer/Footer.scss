@@ -1,6 +1,12 @@
+@import '../../SCSS-utils/mixins';
+
 .footer {
   width: 100%;
   height: 32px;
+
+  @include onMobile {
+    height: 16px;
+  }
 }
 
 .buttons {
@@ -12,6 +18,10 @@
   display: flex;
   justify-content: space-between;
   margin: 0 1rem 2rem;
+
+  @include onMobile {
+    margin: 0 1rem 1rem;
+  }
 
   &__button {
     font-size: 20px;

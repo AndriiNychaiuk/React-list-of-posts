@@ -79,14 +79,12 @@ const App: React.FC = () => {
   const { innerWidth } = window;
   const { pathname } = useLocation();
 
-  console.log(pathname);
-  
-
   // #region useEffect
 
   useEffect(() => {
     getUsers()
-      .then(setUsers);
+      .then(setUsers)
+      .catch(err => console.log(`${err.name}: ${err.message}`));
     
     setUserId(+pathname.replace(/[^0-9.]/g, ''));
   }, []);
@@ -97,7 +95,7 @@ const App: React.FC = () => {
 
       getUserPosts(userId)
         .then(setUserPosts)
-        .catch(err => console.log(err))
+        .catch(err => console.log(`${err.name}: ${err.message}`))
     }
 
     if (innerWidth <= 769 || (innerWidth <= 1280 && !!userId)) {
