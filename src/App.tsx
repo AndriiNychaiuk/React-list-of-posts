@@ -142,6 +142,7 @@ const App: React.FC = () => {
                   userPosts={userPosts} 
                   userId={userId}
                   onResetUserId={setUserId}
+                  users={users}
                 />
               </>
             )
